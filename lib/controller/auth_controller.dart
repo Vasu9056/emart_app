@@ -1,69 +1,60 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emart_app/consts/consts.dart';
-import 'package:emart_app/consts/firebase_consts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:mycart/consts/consts.dart';
+import 'package:mycart/consts/firebase_const.dart';
 
 class AuthController extends GetxController {
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var isLoading = false.obs;
+  var isloading = false.obs;
 
-  //login method
-  Future<UserCredential?> LoginMethod({context}) async {
-    UserCredential? userCredential;
+  Future<UserCredential?> login({email, password, context}) async {
+    UserCredential? usercrenditial;
     try {
-      userCredential = await auth.signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
+      usercrenditial = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      VxToast.show(context, msg: e.toString());
+      VxToast.show(context, msg: e.message.toString());
     }
-    return userCredential;
+    return usercrenditial;
   }
 
-  //signup method
-  Future<UserCredential?> SignUpMethod({email, password, context}) async {
-    UserCredential? userCredential;
+  //signup
+
+  Future<UserCredential?> signup({email, password, context}) async {
+    UserCredential? usercredential;
+
     try {
-      userCredential = await auth.createUserWithEmailAndPassword(
+      usercredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       VxToast.show(context, msg: e.toString());
     }
-    return userCredential;
+
+    return usercredential;
   }
 
-  //storing the data
-
-  storeuserdata({
-    name,
-    password,
-    email,
-  }) async {
+  //storing data
+  storeUserdata({name, email, password}) async {
     DocumentReference store =
-        await firestore.collection(usercollection).doc(currentUser!.uid);
+        firestore.collection(userCollection).doc(user!.uid);
     store.set({
       'name': name,
       'password': password,
-      'email': email,
       'imgurl': '',
-      'id': currentUser!.uid,
+      'email': email,
+      'id': user!.uid,
       'cart_count': "00",
       'Order_count': "00",
       'wishlist_count': "00"
     });
   }
 
-  //signout method
-
-  signoutmethod({context}) async {
+  //signout
+  signout({context}) async {
     try {
       await auth.signOut();
     } catch (e) {
       VxToast.show(context, msg: e.toString());
     }
   }
-
-  void changeImage(BuildContext context) {}
 }

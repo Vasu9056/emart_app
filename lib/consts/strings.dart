@@ -19,7 +19,8 @@ const termsandcond = "Terms and Conditions";
 const privacypolicy = "Privacy Policy";
 const oldpassword = 'Old Password';
 const newpassword = 'New Password';
-
+const featuredCategories = "Featured Categories";
+const featuredProducts = "Featured Products";
 const Login = "Login Sucessfully";
 const Logout = "Logout Successfully";
 const home = "Home",
@@ -62,3 +63,4 @@ const video = "Video",
     productsyoumaylike = "Products you may also like";
 
 const wishlist = "My Wishlist", orders = "My Orders", messages = "Messages";
+const paypal = "Paypal", stripe = "Stripe", cod = "Cash on delivery";
